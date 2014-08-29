@@ -8,5 +8,14 @@
 #define TIMER_MAX_TIMERS                4       
 #define TIMER_OP_QUEUE_SIZE             5      
 
+#define TOGGLE_LED_GPIOTE_CHANNEL       0
+
+#define MAIN_BUTTON_PIN BUTTON_0
+#define MAIN_LED_PIN    LED_0
+
+#define SECONDARY_BUTTON_PIN BUTTON_1
+#define SECONDARY_LED_PIN    LED_1
+
+
 #endif // _CONFIG_H_
 

@@ -3,21 +3,18 @@
 #include "nrf.h"
 #include "nrf_sdm.h"
 #include "nrf_soc.h"
+
 #include "softdevice_handler.h"
 #include "app_error.h"
 #include "app_timer.h"
 
+#include "config.h"
 #include "hardware.h"
 #include "scheduler.h"
 #include "timer.h"
-
-static app_timer_id_t g_timer1;
+#include "gpiote.h"
 
 static void power_manage(void);
-static void timer_timeout_timer1(void * p_context);
-static void start_timer();
-
-static void start_gpiote_toggle_led();
 
 int main()
 {
@@ -26,11 +23,11 @@ int main()
     scheduler_init();
 
     leds_init();
-    timer_init();
-
+    // timer_init();
     // start_timer();
 
-    start_gpiote_toogle_led();
+    gpiote_toggle_led_init();
+    start_gpiote_timer();
 
     while(1) {
         app_sched_execute();
@@ -44,24 +41,7 @@ void power_manage(void)
     CHECK_ERROR(sd_app_evt_wait());
 }
 
-// timers
 
-static void start_timer()
-{
-    CHECK_ERROR(app_timer_create(&g_timer1, APP_TIMER_MODE_REPEATED, timer_timeout_timer1));
-    CHECK_ERROR(app_timer_start(g_timer1, 10000, NULL));
-}
-
-void timer_timeout_timer1(void * p_context)
-{
-    led_toggle();
-}
-
-// gpiote test
-static void start_gpiote_toggle_led()
-{
-    
-}
 
 // error handler
 void app_error_handler(uint32_t error_code, uint32_t line_num, const uint8_t * p_file_name)

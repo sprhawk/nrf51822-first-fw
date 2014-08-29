@@ -1,4 +1,5 @@
 #include "hardware.h"
+#include "config.h"
 
 void gpio_init(void)
 {
