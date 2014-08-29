@@ -15,6 +15,9 @@ static app_timer_id_t g_timer1;
 
 static void power_manage(void);
 static void timer_timeout_timer1(void * p_context);
+static void start_timer();
+
+static void start_gpiote_toggle_led();
 
 int main()
 {
@@ -25,8 +28,9 @@ int main()
     leds_init();
     timer_init();
 
-    CHECK_ERROR(app_timer_create(&g_timer1, APP_TIMER_MODE_REPEATED, timer_timeout_timer1));
-    CHECK_ERROR(app_timer_start(g_timer1, 10000, NULL));
+    // start_timer();
+
+    start_gpiote_toogle_led();
 
     while(1) {
         app_sched_execute();
@@ -42,14 +46,27 @@ void power_manage(void)
 
 // timers
 
+static void start_timer()
+{
+    CHECK_ERROR(app_timer_create(&g_timer1, APP_TIMER_MODE_REPEATED, timer_timeout_timer1));
+    CHECK_ERROR(app_timer_start(g_timer1, 10000, NULL));
+}
+
 void timer_timeout_timer1(void * p_context)
 {
     led_toggle();
 }
 
+// gpiote test
+static void start_gpiote_toggle_led()
+{
+    
+}
+
 // error handler
 void app_error_handler(uint32_t error_code, uint32_t line_num, const uint8_t * p_file_name)
 {
+    sd_nvic_SystemReset();
 }
 
 void assert_nrf_callback(uint16_t line_num, const uint8_t * p_file_name)
