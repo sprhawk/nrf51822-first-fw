@@ -14,7 +14,7 @@ SOFTDEVICE_HEX_PATH = $(HOME)Developer/prjs/embeded/nrf/s110_nrf51822_7.0.0/s110
 BUILD_SCRIPTS_PATH = $(HOME)Developer/prjs/embeded/prjs/nrf51822/build_scripts/
 TEMPLATE_PATH = $(BUILD_SCRIPTS_PATH)
 
-C_SOURCE_FILES += main.c scheduler.c hardware.c
+C_SOURCE_FILES += main.c scheduler.c hardware.c timer.c
 
 # C_SOURCE_FILES += softdevice_handler.c # need custome defined assert_nrf_callback()
 
@@ -54,7 +54,7 @@ C_SOURCE_FILES += softdevice_handler.c
 # C_SOURCE_FILES += app_fifo.c
 # C_SOURCE_FILES += app_gpiote.c
 C_SOURCE_FILES += app_scheduler.c
-# C_SOURCE_FILES += app_timer.c
+C_SOURCE_FILES += app_timer.c
 # C_SOURCE_FILES += app_trace.c
 # C_SOURCE_FILES += app_uart.c
 # C_SOURCE_FILES += app_uart_fifo.c

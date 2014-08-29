@@ -4,10 +4,7 @@
 #include "softdevice_handler.h"
 #include "app_scheduler.h"
 #include "app_timer.h"
-
-#define SCHEDULER_MAX_EVENT_SIZE MAX(APP_TIMER_SCHED_EVT_SIZE, 0)
-#define SCHEDULER_QUEUE_SIZE    10
-
+#include "config.h"
 
 void scheduler_init(void)
 {
