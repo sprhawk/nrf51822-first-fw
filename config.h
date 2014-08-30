@@ -17,5 +17,8 @@
 #define SECONDARY_LED_PIN    LED_1
 
 
+// BLE related
+#define BLE_DEVICE_NAME "TEST"
+
 #endif // _CONFIG_H_
 

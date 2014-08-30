@@ -13,6 +13,7 @@
 #include "scheduler.h"
 #include "timer.h"
 #include "gpiote.h"
+#include "ble.h"
 
 static void power_manage(void);
 
@@ -38,7 +39,7 @@ int main()
 
 void power_manage(void)
 {
-    CHECK_ERROR(sd_app_evt_wait());
+    APP_ERROR_CHECK(sd_app_evt_wait());
 }
 
 

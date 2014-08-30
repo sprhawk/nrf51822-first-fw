@@ -16,8 +16,8 @@ void timer_init(void)
 
 void start_timer()
 {
-    CHECK_ERROR(app_timer_create(&g_timer1, APP_TIMER_MODE_REPEATED, timer_timeout_timer1));
-    CHECK_ERROR(app_timer_start(g_timer1, 10000, NULL));
+    APP_ERROR_CHECK(app_timer_create(&g_timer1, APP_TIMER_MODE_REPEATED, timer_timeout_timer1));
+    APP_ERROR_CHECK(app_timer_start(g_timer1, 10000, NULL));
 }
 
 void timer_timeout_timer1(void * p_context)
