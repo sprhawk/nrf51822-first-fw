@@ -15,6 +15,8 @@
 #include "gpiote.h"
 #include "ble.h"
 
+#include "ble_app.h"
+
 static void power_manage(void);
 
 int main()
