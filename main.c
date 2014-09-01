@@ -57,7 +57,9 @@ void power_manage(void)
 // error handler
 void app_error_handler(uint32_t error_code, uint32_t line_num, const uint8_t * p_file_name)
 {
-#ifndef DEBUG
+#ifdef DEBUG
+    printf("%s:%d -- err:%d\n", (char *)p_file_name, line_num, error_code);
+#elif
     sd_nvic_SystemReset();
 #endif
 }
