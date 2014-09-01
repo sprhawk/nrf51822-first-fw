@@ -18,7 +18,7 @@
 
 
 // BLE related
-#define BLE_DEVICE_NAME "TEST"
+#define BLE_DEVICE_NAME "air-beacon"
 
 #endif // _CONFIG_H_
 

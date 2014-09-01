@@ -16,15 +16,31 @@
 
 #include "config.h"
 
+#include <stdio.h>
+#include <stdlib.h>
+
+uint8_t * ble_app_adv_new();
+
+
 static void ble_on_event_handler(ble_evt_t * p_ble_evt);
 
 void ble_app_init(void)
 {
+    // service_changed characteristic cannot be changed.
     ble_enable_params_t bep = { { 0 } };
     APP_ERROR_CHECK(sd_ble_enable(&bep));
     
     APP_ERROR_CHECK(softdevice_ble_evt_handler_set(ble_on_event_handler));
     
+    ble_gap_addr_t addr = { 0 };
+    addr.addr_type = BLE_GAP_ADDR_TYPE_RANDOM_PRIVATE_NON_RESOLVABLE;
+    APP_ERROR_CHECK(sd_ble_gap_address_set(BLE_GAP_ADDR_CYCLE_MODE_AUTO, &addr));
+
+    ble_opt_t opt;
+    memset(&opt, 0, sizeof(opt));
+    opt.gap.privacy.interval_s = 1;
+    APP_ERROR_CHECK(sd_ble_opt_set(BLE_GAP_OPT_PRIVACY, &opt));
+
     ble_gap_conn_sec_mode_t sec_mode;
     BLE_GAP_CONN_SEC_MODE_SET_OPEN(&sec_mode);
     uint16_t len = strlen(BLE_DEVICE_NAME);
@@ -51,6 +67,7 @@ void ble_app_init(void)
 
     ble_gap_adv_params_t params = {0};
     params.type = BLE_GAP_ADV_TYPE_ADV_NONCONN_IND; //BLE_GAP_ADV_TYPE_ADV_IND, BLE_GAP_ADV_TYPE_ADV_DIRECT_IND, BLE_GAP_ADV_TYPE_ADV_SCAN_IND
+    params.interval = 160 ;// 100 ms
     APP_ERROR_CHECK(sd_ble_gap_adv_start(&params));
 /*    APP_ERROR_CHECK(sd_ble_gap_adv_stop());
 
@@ -141,3 +158,15 @@ void ble_on_event_handler(ble_evt_t * p_ble_evt)
     }
 }
 
+uint8_t * ble_app_adv_data_new()
+{
+    uint8_t * pdata = NULL;
+    const size_t size = sizeof(uint8_t) * BLE_GAP_ADV_MAX_SIZE;
+    pdata = malloc(size);
+    if(NULL == pdata) {
+        APP_ERROR_HANDLER(NRF_ERROR_NO_MEM);
+        return NULL;
+    }
+    memset(pdata, 0, size);
+    return pdata;
+}
