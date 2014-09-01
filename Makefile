@@ -17,7 +17,10 @@ TEMPLATE_PATH = $(BUILD_SCRIPTS_PATH)
 CFLAGS += -DBLE_STACK_SUPPORT_REQD
 # debug: CFLAGS+=-DENABLE_DEBUG_LOG_SUPPORT # app module uses no flow control
 
-C_SOURCE_FILES += main.c scheduler.c hardware.c timer.c gpiote.c ble_app.c uart.c
+C_SOURCE_FILES += main.c scheduler.c hardware.c timer.c gpiote.c ble_app.c
+ifeq ($(MAKECMDGOALS),debug)
+    C_SOURCE_FILES += uart.c
+endif
 
 # nrf_delay
 # C_SOURCE_FILES += nrf_delay.c
