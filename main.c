@@ -25,7 +25,10 @@ int main()
 
     SOFTDEVICE_HANDLER_INIT(NRF_CLOCK_LFCLKSRC_XTAL_20_PPM, true);
     scheduler_init();
+
+#ifdef DEBUG
     uart_init();
+#endif
 
     leds_init();
     timer_init();
