@@ -3,6 +3,8 @@
 #include "config.h"
 #include "utility.h"
 #include "hardware.h"
+#include <stdio.h>
+#include "simple_uart.h"
 
 app_timer_id_t g_timer1;
 
@@ -23,4 +25,5 @@ void start_timer()
 void timer_timeout_timer1(void * p_context)
 {
     led_toggle();
+    simple_uart_putstring((const uint8_t *)"hello world");
 }

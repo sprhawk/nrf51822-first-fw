@@ -44,7 +44,7 @@ C_SOURCE_FILES += main.c scheduler.c hardware.c timer.c gpiote.c ble_app.c
 # C_SOURCE_FILES += twi_sw_master.c
 
 # simple_uart
-# C_SOURCE_FILES += simple_uart.c
+C_SOURCE_FILES += simple_uart.c
 
 # sd_common
 C_SOURCE_FILES += softdevice_handler.c
