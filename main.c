@@ -16,7 +16,10 @@
 #include "ble.h"
 
 #include "ble_app.h"
+
+#ifdef DEBUG
 #include "uart.h"
+#endif
 
 static void power_manage(void);
 
