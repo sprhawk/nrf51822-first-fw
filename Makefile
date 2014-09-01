@@ -16,7 +16,7 @@ TEMPLATE_PATH = $(BUILD_SCRIPTS_PATH)
 
 CFLAGS += -DBLE_STACK_SUPPORT_REQD
 
-C_SOURCE_FILES += main.c scheduler.c hardware.c timer.c gpiote.c ble_app.c
+C_SOURCE_FILES += main.c scheduler.c hardware.c timer.c gpiote.c ble_app.c uart.c
 
 # nrf_delay
 # C_SOURCE_FILES += nrf_delay.c

@@ -25,5 +25,6 @@ void start_timer()
 void timer_timeout_timer1(void * p_context)
 {
     led_toggle();
-    simple_uart_putstring((const uint8_t *)"hello world");
+    // simple_uart_putstring((const uint8_t *)"hello world");
+    printf("hello world\n");
 }
