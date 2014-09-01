@@ -51,12 +51,12 @@ void power_manage(void)
     APP_ERROR_CHECK(sd_app_evt_wait());
 }
 
-
-
 // error handler
 void app_error_handler(uint32_t error_code, uint32_t line_num, const uint8_t * p_file_name)
 {
-    // sd_nvic_SystemReset();
+#ifndef DEBUG
+    sd_nvic_SystemReset();
+#endif
 }
 
 void assert_nrf_callback(uint16_t line_num, const uint8_t * p_file_name)

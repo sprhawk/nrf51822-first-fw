@@ -15,6 +15,7 @@ BUILD_SCRIPTS_PATH = $(HOME)Developer/prjs/embeded/prjs/nrf51822/build_scripts/
 TEMPLATE_PATH = $(BUILD_SCRIPTS_PATH)
 
 CFLAGS += -DBLE_STACK_SUPPORT_REQD
+# debug: CFLAGS+=-DENABLE_DEBUG_LOG_SUPPORT # app module uses no flow control
 
 C_SOURCE_FILES += main.c scheduler.c hardware.c timer.c gpiote.c ble_app.c uart.c
 
