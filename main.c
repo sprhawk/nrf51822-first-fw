@@ -58,8 +58,9 @@ void power_manage(void)
 void app_error_handler(uint32_t error_code, uint32_t line_num, const uint8_t * p_file_name)
 {
 #ifdef DEBUG
-    printf("%s:%d -- err:%d\n", (char *)p_file_name, line_num, error_code);
-#elif
+    // printf will add about 35KB size of code
+    printf("%s:%lu -- err:%lu\n", (char *)p_file_name, line_num, error_code);
+#else
     sd_nvic_SystemReset();
 #endif
 }
