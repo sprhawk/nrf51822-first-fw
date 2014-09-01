@@ -38,7 +38,7 @@ void ble_app_init(void)
 
     ble_opt_t opt;
     memset(&opt, 0, sizeof(opt));
-    opt.gap.privacy.interval_s = 1;
+    opt.gap.privacy.interval_s = 1; // seconds
     APP_ERROR_CHECK(sd_ble_opt_set(BLE_GAP_OPT_PRIVACY, &opt));
 
     ble_gap_conn_sec_mode_t sec_mode;
