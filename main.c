@@ -32,6 +32,8 @@ int main()
     gpiote_toggle_led_init();
     start_gpiote_timer();
 
+    ble_app_init();
+
     while(1) {
         app_sched_execute();
         power_manage();
@@ -49,7 +51,7 @@ void power_manage(void)
 // error handler
 void app_error_handler(uint32_t error_code, uint32_t line_num, const uint8_t * p_file_name)
 {
-    sd_nvic_SystemReset();
+    // sd_nvic_SystemReset();
 }
 
 void assert_nrf_callback(uint16_t line_num, const uint8_t * p_file_name)

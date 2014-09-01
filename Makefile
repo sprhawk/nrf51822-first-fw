@@ -14,6 +14,8 @@ SOFTDEVICE_HEX_PATH = $(HOME)Developer/prjs/embeded/nrf/s110_nrf51822_7.0.0/s110
 BUILD_SCRIPTS_PATH = $(HOME)Developer/prjs/embeded/prjs/nrf51822/build_scripts/
 TEMPLATE_PATH = $(BUILD_SCRIPTS_PATH)
 
+CFLAGS += -DBLE_STACK_SUPPORT_REQD
+
 C_SOURCE_FILES += main.c scheduler.c hardware.c timer.c gpiote.c ble_app.c
 
 # nrf_delay
@@ -63,7 +65,7 @@ C_SOURCE_FILES += app_timer.c
 # C_SOURCE_FILES += pstorage.c # need pstorage_platform.h
 
 # ble
-# C_SOURCE_FILES += ble_advdata.c
+C_SOURCE_FILES += ble_advdata.c
 # C_SOURCE_FILES += ble_advdata_parser.c
 # C_SOURCE_FILES += ble_conn_params.c
 # C_SOURCE_FILES += ble_debug_assert_handler.c
