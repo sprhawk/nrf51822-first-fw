@@ -15,7 +15,7 @@
 #include "gpiote.h"
 #include "ble.h"
 
-#include "ble_app.h"
+#include "ble/ble_app.h"
 
 #ifdef DEBUG
 #include "uart.h"
