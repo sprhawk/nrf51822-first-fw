@@ -1,5 +1,7 @@
 #include "ble_app_gatts.h"
 
+#include <stdio.h>
+
 #include "nrf.h"
 #include "app_error.h"
 
@@ -11,6 +13,7 @@
 #include "ble_gatts.h"
 
 #include "config.h"
+#include "ble_app.h"
 
 #define READ_PERM_MASK          (1 << 0)
 #define WRITE_PERM_MASK         (1 << 1)
@@ -43,6 +46,44 @@ uint32_t ble_app_gatts_characteristic_add(const ble_uuid_t uuid,
                                             const uint16_t characteristic_max_value_length,
                                             ble_gatts_char_handles_t * p_handles);
 
+void ble_app_gatts_on_event(ble_evt_t * p_ble_evt)
+{
+    switch (p_ble_evt->header.evt_id) {
+        case BLE_GATTS_EVT_WRITE:
+#ifdef DEBUG
+    printf("ble evt: gatts_evt_write(%d)\r\n", p_ble_evt->header.evt_id);
+#endif
+            break;
+        case BLE_GATTS_EVT_RW_AUTHORIZE_REQUEST:
+#ifdef DEBUG
+    printf("ble evt: gatts_evt_rw_authorize_request(%d)\r\n", p_ble_evt->header.evt_id);
+#endif
+            break;
+        case BLE_GATTS_EVT_SYS_ATTR_MISSING:
+#ifdef DEBUG
+    printf("ble evt: gatts_evt_sys_attr_missing(%d)\r\n", p_ble_evt->header.evt_id);
+#endif
+            break;
+        case BLE_GATTS_EVT_HVC:
+#ifdef DEBUG
+    printf("ble evt: gatts_evt_hvc(%d)\r\n", p_ble_evt->header.evt_id);
+#endif
+            break;
+        case BLE_GATTS_EVT_SC_CONFIRM:
+#ifdef DEBUG
+    printf("ble evt: gatts_evt_sc_confirm(%d)\r\n", p_ble_evt->header.evt_id);
+#endif
+            break;
+        case BLE_GATTS_EVT_TIMEOUT:
+#ifdef DEBUG
+    printf("ble evt: gatts_evt_timeout(%d)\r\n", p_ble_evt->header.evt_id);
+#endif
+            if (BLE_GATT_TIMEOUT_SRC_PROTOCOL == p_ble_evt->evt.gatts_evt.params.timeout.src) {
+                ble_app_disconnect();
+            }
+            break;
+    }
+}
 void ble_app_gatts_init(void)
 {
     memset(services_handles, 0, sizeof(services_handles));

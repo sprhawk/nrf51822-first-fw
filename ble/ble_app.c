@@ -47,6 +47,17 @@ void ble_app_init(void)
     */
 }
 
+void ble_app_disconnect(void)
+{
+    if (BLE_CONN_HANDLE_INVALID != m_client_conn_handle) {
+        uint32_t err_code = sd_ble_gap_disconnect(m_client_conn_handle,
+                                                    BLE_HCI_REMOTE_USER_TERMINATED_CONNECTION);
+        if(NRF_SUCCESS != err_code) {
+            printf("timeout disconnecting failed:%4lx\r\n", err_code);
+        }
+    }
+}
+
 // setup gap related parameters
 void ble_app_gap_init(void)
 {
@@ -305,45 +316,13 @@ void ble_on_event_handler(ble_evt_t * p_ble_evt)
     
         // gatts events
         case BLE_GATTS_EVT_WRITE:
-#ifdef DEBUG
-    printf("ble evt: gatts_evt_write(%d)\r\n", p_ble_evt->header.evt_id);
-#endif
-            break;
         case BLE_GATTS_EVT_RW_AUTHORIZE_REQUEST:
-#ifdef DEBUG
-    printf("ble evt: gatts_evt_rw_authorize_request(%d)\r\n", p_ble_evt->header.evt_id);
-#endif
-            break;
         case BLE_GATTS_EVT_SYS_ATTR_MISSING:
-#ifdef DEBUG
-    printf("ble evt: gatts_evt_sys_attr_missing(%d)\r\n", p_ble_evt->header.evt_id);
-#endif
-            break;
         case BLE_GATTS_EVT_HVC:
-#ifdef DEBUG
-    printf("ble evt: gatts_evt_hvc(%d)\r\n", p_ble_evt->header.evt_id);
-#endif
-            break;
         case BLE_GATTS_EVT_SC_CONFIRM:
-#ifdef DEBUG
-    printf("ble evt: gatts_evt_sc_confirm(%d)\r\n", p_ble_evt->header.evt_id);
-#endif
-            break;
         case BLE_GATTS_EVT_TIMEOUT:
-#ifdef DEBUG
-    printf("ble evt: gatts_evt_timeout(%d)\r\n", p_ble_evt->header.evt_id);
-#endif
-            if (BLE_GATT_TIMEOUT_SRC_PROTOCOL == p_ble_evt->evt.gatts_evt.params.timeout.src) {
-                uint32_t err_code = sd_ble_gap_disconnect(m_client_conn_handle,
-                                                            BLE_HCI_REMOTE_USER_TERMINATED_CONNECTION);
-                m_client_conn_handle = 0;
-                if(NRF_SUCCESS != err_code) {
-                    printf("timeout disconnecting failed:%4lx\r\n", err_code);
-                }
-            }
+            ble_app_gatts_on_event(p_ble_evt);
             break;
-            break;
-
         default:
 #ifdef DEBUG
     printf("ble evt: unknown(%d)\r\n", p_ble_evt->header.evt_id);
