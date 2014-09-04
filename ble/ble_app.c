@@ -26,6 +26,8 @@ static void ble_on_event_handler(ble_evt_t * p_ble_evt);
 static void ble_gap_init(void);
 static void ble_adv_init(void);
 
+static uint16_t m_client_conn_handle = 0;
+
 void ble_app_init(void)
 {
     // service_changed determines whether service changes will be updated on central ?
@@ -186,11 +188,13 @@ void ble_on_event_handler(ble_evt_t * p_ble_evt)
     ble_gap_conn_params_t *p = &p_ble_evt->evt.gap_evt.params.connected.conn_params;
     log_conn_params(p);
 #endif
+            m_client_conn_handle = p_ble_evt->evt.gap_evt.conn_handle;
             break;
         case BLE_GAP_EVT_DISCONNECTED:
 #ifdef DEBUG
     printf("ble evt: gap_evt_disconnected(%d) reason:%u\r\n", p_ble_evt->header.evt_id, p_ble_evt->evt.gap_evt.params.disconnected.reason);
 #endif
+            m_client_conn_handle = 0;
             ble_app_adv_start();
             break;
         case BLE_GAP_EVT_CONN_PARAM_UPDATE:
@@ -329,6 +333,15 @@ void ble_on_event_handler(ble_evt_t * p_ble_evt)
 #ifdef DEBUG
     printf("ble evt: gatts_evt_timeout(%d)\r\n", p_ble_evt->header.evt_id);
 #endif
+            if (BLE_GATT_TIMEOUT_SRC_PROTOCOL == p_ble_evt->evt.gatts_evt.params.timeout.src) {
+                uint32_t err_code = sd_ble_gap_disconnect(m_client_conn_handle,
+                                                            BLE_HCI_REMOTE_USER_TERMINATED_CONNECTION);
+                m_client_conn_handle = 0;
+                if(NRF_SUCCESS != err_code) {
+                    printf("timeout disconnecting failed:%4lx\r\n", err_code);
+                }
+            }
+            break;
             break;
 
         default:
