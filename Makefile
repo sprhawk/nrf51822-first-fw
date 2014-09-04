@@ -24,7 +24,7 @@ C_SOURCE_FILES += sys_handler.c
 # ble related sources
 INCLUDEPATHS += -I"./"
 C_SOURCE_PATHS += ble
-C_SOURCE_FILES += ble_app.c ble_gatts.c
+C_SOURCE_FILES += ble_app.c ble_app_gatts.c
 
 ifeq ($(MAKECMDGOALS),debug)
     C_SOURCE_FILES += uart.c

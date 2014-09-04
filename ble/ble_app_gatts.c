@@ -1,4 +1,4 @@
-#include "ble_gatts.h"
+#include "ble_app_gatts.h"
 
 #include "nrf.h"
 #include "app_error.h"
@@ -33,22 +33,22 @@ static const uint16_t characteristics_uuids[CHARACTERISTIC_MAX_COUNT] =
 static uint16_t services_handles[SERVICE_MAX_COUNT] = { 0 };
 static ble_gatts_char_handles_t characteristics_handles[SERVICE_MAX_COUNT] = { {0} };
 static void ble_uuids_init(void);
-static void ble_services_init();
-static void ble_service_1_characteristic_1_init();
+static void ble_app_services_init();
+static void ble_app_service_1_characteristic_1_init();
 
-uint32_t ble_gatts_characteristic_add(const ble_uuid_t uuid, 
+uint32_t ble_app_gatts_characteristic_add(const ble_uuid_t uuid, 
                                             const uint16_t properties,
                                             uint8_t * p_characteristic_value, 
                                             const uint16_t characteristic_value_length,
                                             const uint16_t characteristic_max_value_length,
                                             ble_gatts_char_handles_t * p_handles);
 
-void ble_gatts_init(void)
+void ble_app_gatts_init(void)
 {
     memset(services_handles, 0, sizeof(services_handles));
     memset(characteristics_handles, 0, sizeof(characteristics_handles));
     ble_uuids_init();
-    ble_services_init();
+    ble_app_services_init();
 }
 
 void ble_uuids_init(void)
@@ -61,7 +61,7 @@ void ble_uuids_init(void)
     */
 }
 
-void ble_services_init()
+void ble_app_services_init()
 {
     ble_uuid_t uuid;
     uuid.type = BLE_UUID_TYPE_BLE;
@@ -71,10 +71,10 @@ void ble_services_init()
     APP_ERROR_CHECK(sd_ble_gatts_service_add(BLE_GATTS_SRVC_TYPE_PRIMARY, &uuid, &services_handles[index]));
 
     // according to s110/ble_gatts.h:360 -> can only add a characteristic to the last added service
-    ble_service_1_characteristic_1_init();
+    ble_app_service_1_characteristic_1_init();
 }
 
-void ble_service_1_characteristic_1_init()
+void ble_app_service_1_characteristic_1_init()
 {
     const int i = CHARACTERISTIC_1;
 
@@ -83,7 +83,7 @@ void ble_service_1_characteristic_1_init()
     uuid.type = BLE_UUID_TYPE_BLE;
     uuid.uuid = characteristics_uuids[i];
 
-    APP_ERROR_CHECK(ble_gatts_characteristic_add(uuid, 
+    APP_ERROR_CHECK(ble_app_gatts_characteristic_add(uuid, 
                                 WRITE_PROP_MASK|WRITE_PERM_MASK|READ_PERM_MASK,
                                 NULL,
                                 0,
@@ -91,7 +91,7 @@ void ble_service_1_characteristic_1_init()
                                 &characteristics_handles[i]));
 }
 
-uint32_t ble_gatts_characteristic_add(const ble_uuid_t uuid, 
+uint32_t ble_app_gatts_characteristic_add(const ble_uuid_t uuid, 
                                             const uint16_t properties,
                                             uint8_t * p_characteristic_value, 
                                             const uint16_t characteristic_value_length,

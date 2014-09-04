@@ -18,13 +18,13 @@
 #include "app_error.h"
 
 #include "config.h"
-#include "ble_gatts.h"
+#include "ble_app_gatts.h"
 
 uint8_t * ble_app_adv_data_new(size_t size);
 
 static void ble_on_event_handler(ble_evt_t * p_ble_evt);
-static void ble_gap_init(void);
-static void ble_adv_init(void);
+static void ble_app_gap_init(void);
+static void ble_app_adv_init(void);
 
 static uint16_t m_client_conn_handle = 0;
 
@@ -36,9 +36,9 @@ void ble_app_init(void)
     
     APP_ERROR_CHECK(softdevice_ble_evt_handler_set(ble_on_event_handler));
     
-    ble_gap_init();
-    ble_adv_init();
-    ble_gatts_init();
+    ble_app_gap_init();
+    ble_app_adv_init();
+    ble_app_gatts_init();
 
 /*  
     uint16_t conn_handle = 0;
@@ -48,7 +48,7 @@ void ble_app_init(void)
 }
 
 // setup gap related parameters
-void ble_gap_init(void)
+void ble_app_gap_init(void)
 {
     // setup ble address type
 #if 0
@@ -85,7 +85,7 @@ void ble_gap_init(void)
     APP_ERROR_CHECK(sd_ble_gap_ppcp_set(&conn_params));
 }
 
-void ble_adv_init(void)
+void ble_app_adv_init(void)
 {
 #if 1
     ble_advdata_t adv_data;
