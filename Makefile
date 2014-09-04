@@ -17,18 +17,18 @@ TEMPLATE_PATH = $(BUILD_SCRIPTS_PATH)
 CFLAGS += -DBLE_STACK_SUPPORT_REQD
 # debug: CFLAGS+=-DENABLE_DEBUG_LOG_SUPPORT # app module uses no flow control
 
-C_SOURCE_FILES += main.c scheduler.c hardware.c timer.c gpiote.c
+C_SOURCE_FILES += main.c scheduler.c hardware.c timer.c gpiote.c 
+
+C_SOURCE_FILES += sys_handler.c
+
+# ble related sources
+INCLUDEPATHS += -I"./"
+C_SOURCE_PATHS += ble
+C_SOURCE_FILES += ble_app.c ble_gatts.c
+
 ifeq ($(MAKECMDGOALS),debug)
     C_SOURCE_FILES += uart.c
 endif
-
-# search path for working direcotry
-INCLUDEPATHS += -I"./"
-
-# ble related
-C_SOURCE_PATHS += ble
-C_SOURCE_FILES += ble_app.c
-
 
 # nrf_delay
 # C_SOURCE_FILES += nrf_delay.c

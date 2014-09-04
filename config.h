@@ -18,7 +18,18 @@
 
 
 // BLE related
-#define BLE_DEVICE_NAME "air-beacon"
+#define BLE_DEVICE_NAME "yhb-ble"
+#define BLE_MANUFECTURE_NAME "hongbo@yang.me"
+#define BLE_MODEL_NUM "ble1"
+#define BLE_DEVICE_DEFAULT_TX_POWER -30
+
+// BLE gap related
+#define BLE_CONN_MIN_INTERVAL 80 // 80 * 1.25 ms = 100 ms
+#define BLE_CONN_MAX_INTERVAL 800 // 800 * 1.25ms = 1 s //BLE_GAP_CP_MAX_CONN_INTVL_MAX
+#define BLE_CONN_SLAVE_LANTENCY 0
+#define BLE_CONN_SUPERVISION_TIMEOUT 100
+
+#define BLE_ADVERTISED_SERVICE_UUID_16BIT 0x1804
 
 #endif // _CONFIG_H_
 
